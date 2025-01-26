@@ -7,7 +7,7 @@ public class BubbleControl : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float upwardForce = 5f; // Fuerza hacia arriba
     [SerializeField] private float gravityScaleDefault = 1f; // Gravedad por defecto
-    [SerializeField] private float powerUpSpeedMultiplier = 2f; // Multiplicador de velocidad en Power-Up
+    [SerializeField] private float powerUpSpeedMultiplier = 1.2f; // Multiplicador de velocidad en Power-Up
 
     static public bool superBubble = false;
 
@@ -21,9 +21,13 @@ public class BubbleControl : MonoBehaviour
     private bool isSpacePressed = false; // Controla si el espacio está presionado
     private bool powerUpActive = false; // Rastrea si el Power-Up estuvo activo
 
+    private Animator anim;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+
         rb.gravityScale = gravityScaleDefault;
 
         // Asegúrate de que el clip de audio está precargado y reproducido
@@ -76,10 +80,12 @@ public class BubbleControl : MonoBehaviour
                 GameOverMessage.SetActive(true);
                 audioSourceMusic.Stop();
                 isDead = true;
-                Destroy(gameObject);
+                anim.SetBool("Die", true);
+            
             }
             else
             {
+                anim.SetBool("PowerUp", false);
                 superBubble = false;
                 audioSourceMusic.clip = background;
                 audioSourceMusic.Play();
@@ -109,6 +115,10 @@ public class BubbleControl : MonoBehaviour
             Debug.Log($"Power-Up activado. Velocidad aumentada a {TimerController.time}");
         }
     }
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -123,6 +133,7 @@ public class BubbleControl : MonoBehaviour
             }
             else
             {
+                anim.SetBool("PowerUp", false);
                 superBubble = false;
                 audioSourceMusic.clip = background;
                 audioSourceMusic.Play();
@@ -133,6 +144,7 @@ public class BubbleControl : MonoBehaviour
     private void ActivateSuperBubble()
     {
         superBubble = true;
+        anim.SetBool("PowerUp", true);
     }
 
     private void ReduceSpeedAfterPowerUp()

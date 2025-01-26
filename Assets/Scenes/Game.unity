@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd77329a61e3ce4e94704e90580544b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.8
+  baseSpeed: 0
 --- !u!1 &226312727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,6 +1446,7 @@ GameObject:
   - component: {fileID: 1369298091}
   - component: {fileID: 1369298094}
   - component: {fileID: 1369298095}
+  - component: {fileID: 1369298096}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Player
@@ -1602,11 +1603,34 @@ MonoBehaviour:
   audioSourceEffects: {fileID: 0}
   upwardForce: 5
   gravityScaleDefault: 1
+  powerUpSpeedMultiplier: 2
   GameOverMessage: {fileID: 2128220381}
   background: {fileID: 8300000, guid: ac12cc6d98c6e1348afb3f251ce3deca, type: 3}
   powerupSong: {fileID: 8300000, guid: f0eb0196f88985e4a9b78a9a6c291209, type: 3}
   powerupEffect: {fileID: 0}
   isDead: 0
+--- !u!95 &1369298096
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369298090}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 35240cd90cd977d40ae47c24e4df5229, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1413680849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,7 +1959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd77329a61e3ce4e94704e90580544b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.8
+  baseSpeed: 0
 --- !u!212 &1705705005
 SpriteRenderer:
   m_ObjectHideFlags: 0

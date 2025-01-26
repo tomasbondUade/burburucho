@@ -27,7 +27,9 @@ public class SpawnGenerator : MonoBehaviour
             // Si es un Power-Up y superBubble está activo, lo omite
             if (obj.CompareTag("PowerUpWater") && BubbleControl.superBubble)
             {
+                Debug.Log("ya esta con bonus");
                 continue; // Omitir el ciclo actual
+                
             }
 
             // Instancia la burbuja seleccionada
