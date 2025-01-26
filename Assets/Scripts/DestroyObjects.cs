@@ -7,11 +7,9 @@ public class DestroyObjects : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) {
         Destroy(other.gameObject);
-        Debug.Log("Collision");
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         Destroy(other.gameObject);
-        Debug.Log("Trigger");
     }
 }

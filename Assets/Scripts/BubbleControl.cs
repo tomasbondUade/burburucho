@@ -7,17 +7,19 @@ public class BubbleControl : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float upwardForce = 5f; // Fuerza hacia arriba
     [SerializeField] private float gravityScaleDefault = 1f; // Gravedad por defecto
+    [SerializeField] private float powerUpSpeedMultiplier = 2f; // Multiplicador de velocidad en Power-Up
 
     static public bool superBubble = false;
 
     [SerializeField] private GameObject GameOverMessage;
 
     [SerializeField] private AudioClip background; // Música de fondo
-    [SerializeField] private AudioClip powerupSong; // Sonido del power-up
-    [SerializeField] private AudioClip powerupEffect; // Efecto de sonido del power-up
+    [SerializeField] private AudioClip powerupSong; // Sonido del Power-Up
+    [SerializeField] private AudioClip powerupEffect; // Efecto de sonido del Power-Up
 
     public bool isDead = false;
     private bool isSpacePressed = false; // Controla si el espacio está presionado
+    private bool powerUpActive = false; // Rastrea si el Power-Up estuvo activo
 
     void Start()
     {
@@ -43,6 +45,12 @@ public class BubbleControl : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isSpacePressed = false; // Marca que el espacio ya no está presionado
+        }
+
+        // Detecta si el modo Power-Up terminó
+        if (powerUpActive && !superBubble)
+        {
+            ReduceSpeedAfterPowerUp();
         }
     }
 
@@ -82,18 +90,23 @@ public class BubbleControl : MonoBehaviour
             Destroy(other.gameObject);
             ActivateSuperBubble();
 
-            // Reproducir el efecto del power-up sin cambiar la música de fondo
+            // Reproducir el efecto del Power-Up sin cambiar la música de fondo
             if (audioSourceEffects != null && powerupEffect != null)
             {
                 audioSourceEffects.PlayOneShot(powerupEffect);
             }
 
-            // Cambiar la música principal a la canción del power-up
+            // Cambiar la música principal a la canción del Power-Up
             if (powerupSong != null)
             {
                 audioSourceMusic.clip = powerupSong;
                 audioSourceMusic.Play();
             }
+
+            // Incrementar la velocidad durante el Power-Up
+            TimerController.time *= powerUpSpeedMultiplier;
+            powerUpActive = true; // Marca que el Power-Up está activo
+            Debug.Log($"Power-Up activado. Velocidad aumentada a {TimerController.time}");
         }
     }
 
@@ -120,5 +133,13 @@ public class BubbleControl : MonoBehaviour
     private void ActivateSuperBubble()
     {
         superBubble = true;
+    }
+
+    private void ReduceSpeedAfterPowerUp()
+    {
+        // Divide la velocidad por el multiplicador para restablecerla
+        TimerController.time /= powerUpSpeedMultiplier;
+        powerUpActive = false; // Marca que el Power-Up ya no está activo
+        Debug.Log($"Power-Up terminado. Velocidad reducida a {TimerController.time}");
     }
 }
