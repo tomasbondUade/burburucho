@@ -117,6 +117,7 @@ public class BubbleControl : MonoBehaviour
     }
     public void Die()
     {
+        GameOverMessage.SetActive(true);
         Destroy(gameObject);
     }
 
