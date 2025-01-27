@@ -24,7 +24,8 @@ public class LandControl : MonoBehaviour
     // Método para restablecer la velocidad a la original (baseSpeed)
     public void ResetSpeed()
     {
-        TimerController.time = 1f; // Opcional: restablece el tiempo a su estado inicial
+        TimerController.time = 1f; // Restablece el tiempo a su valor inicial
+        currentSpeed = baseSpeed; // Restablece la velocidad actual a su valor base
         Debug.Log("Velocidad restablecida a la base.");
     }
 }

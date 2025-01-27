@@ -877,7 +877,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 15, y: 6}
+  m_Size: {x: 15.521084, y: 6.208433}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -892,8 +892,8 @@ Transform:
   m_GameObject: {fileID: 442759673}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 2.03, z: 5}
-  m_LocalScale: {x: 2.58, y: 2.58, z: 2.58}
+  m_LocalPosition: {x: 0.5722, y: 2.5689, z: 5}
+  m_LocalScale: {x: 2.7089999, y: 2.7089999, z: 2.7089999}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1511,10 +1511,15 @@ MonoBehaviour:
   upwardForce: 5
   gravityScaleDefault: 1
   powerUpSpeedMultiplier: 2
+  invulnerabilityDuration: 1
   GameOverMessage: {fileID: 1753680783}
   background: {fileID: 8300000, guid: ac12cc6d98c6e1348afb3f251ce3deca, type: 3}
   powerupSong: {fileID: 8300000, guid: f0eb0196f88985e4a9b78a9a6c291209, type: 3}
+  gameOverSong: {fileID: 8300000, guid: 1bf803b6e9abc4041bfb384d8227f76f, type: 3}
   powerupEffect: {fileID: 0}
+  circleCollider: {fileID: 0}
+  superBubbleRadius: 0.89
+  normalRadius: 0.6
   isDead: 0
 --- !u!95 &1369298096
 Animator:
@@ -1632,7 +1637,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -577.85, y: -308.34006}
+  m_AnchoredPosition: {x: -398, y: -308.34006}
   m_SizeDelta: {x: 330, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1521791701
@@ -2208,7 +2213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 404.27002, y: -308.34006}
+  m_AnchoredPosition: {x: 470, y: -308.34006}
   m_SizeDelta: {x: 210, y: 82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1755694057
@@ -2340,7 +2345,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 915, y: 591}
+  m_AnchoredPosition: {x: 616, y: 454}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1768098515
@@ -2490,8 +2495,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -75.369995, y: -0.000061035156}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: -9.4407, y: -8.8549}
+  m_SizeDelta: {x: 1889.4, y: 1062.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1987230813
 MonoBehaviour:
