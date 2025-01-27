@@ -6,6 +6,7 @@ public class GameOverManager : MonoBehaviour
     // Reinicia la escena actual
     public void Reset()
     {
+        TimerController.time = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

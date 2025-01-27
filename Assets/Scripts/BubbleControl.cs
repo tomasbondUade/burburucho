@@ -1,6 +1,8 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class BubbleControl : MonoBehaviour
 {
@@ -25,6 +27,10 @@ public class BubbleControl : MonoBehaviour
     [SerializeField] private CircleCollider2D circleCollider; // Referencia al CircleCollider2D
     [SerializeField] private float superBubbleRadius = 0.8f; // Tamaño del collider en modo SuperBubble
     [SerializeField] private float normalRadius = 0.6f; // Tamaño normal del collider
+
+    [SerializeField] private TextMeshProUGUI score;
+
+    [SerializeField] private TextMeshProUGUI scoreInUI;
 
     public bool isDead = false;
     private bool isSpacePressed = false; // Controla si el espacio está presionado
@@ -142,6 +148,14 @@ public class BubbleControl : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+        score.text = scoreInUI.text;
+        GameOverMessage.SetActive(true);
+        Destroy(gameObject);
+    }
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Block"))
@@ -154,7 +168,7 @@ public class BubbleControl : MonoBehaviour
 
             if (superBubble == false)
             {
-                GameOverMessage.SetActive(true);
+                
                 audioSourceMusic.Stop();
 
                 isDead = true;

@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
         if (!bubbleControl.isDead)
         {
             score += Time.deltaTime;
-            scoreText.text = $"Score: {score.ToString("F0")}"; // F0 para mostrar el número sin decimales
+            scoreText.text = score.ToString("F0"); // F0 para mostrar el número sin decimales
         }
     }
 
