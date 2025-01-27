@@ -9,7 +9,7 @@ public class BubbleControl : MonoBehaviour
     [SerializeField] private AudioSource audioSourceMusic; // Fuente de audio principal
     [SerializeField] private AudioSource audioSourceEffects; // Fuente para efectos de sonido
     private Rigidbody2D rb;
-    [SerializeField] private float upwardForce = 5f; // Fuerza hacia arriba
+    [SerializeField] private float upwardForce = 3f; // Fuerza hacia arriba
     [SerializeField] private float gravityScaleDefault = 1f; // Gravedad por defecto
     [SerializeField] private float powerUpSpeedMultiplier = 1.2f; // Multiplicador de velocidad en Power-Up
 
@@ -37,8 +37,15 @@ public class BubbleControl : MonoBehaviour
     private bool powerUpActive = false; // Rastrea si el Power-Up estuvo activo
 
     private bool isInvulnerable = false; // Indica si el jugador está en estado de inmortalidad
-
     private Animator anim;
+
+    // Micrófono
+    private AudioClip microphoneClip;
+    private string microphoneDevice;
+    private const int sampleSize = 128; // Tamaño de muestra para análisis
+    private float[] audioSamples = new float[sampleSize]; // Muestra de datos de audio
+    [SerializeField] private float microphoneThreshold = 0.05f; // Sensibilidad del soplido
+
 
     void Start()
     {
@@ -59,11 +66,22 @@ public class BubbleControl : MonoBehaviour
             audioSourceMusic.clip = background;
             audioSourceMusic.Play();
         }
+
+        // Configurar micrófono
+        if (Microphone.devices.Length > 0)
+        {
+            microphoneDevice = Microphone.devices[0];
+            microphoneClip = Microphone.Start(microphoneDevice, true, 1, 48000);
+        }
+        else
+        {
+            Debug.LogError("No se encontró un micrófono.");
+        }
     }
 
     void Update()
     {
-        // Captura la entrada de usuario en cada frame
+        // Captura la entrada de usuario con la barra espaciadora
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isSpacePressed = true; // Marca que el espacio está presionado
@@ -79,7 +97,22 @@ public class BubbleControl : MonoBehaviour
         {
             ReduceSpeedAfterPowerUp();
         }
+
+        // Captura el audio del micrófono
+        if (microphoneClip != null)
+        {
+            // Obtén los datos de audio actuales del micrófono
+            microphoneClip.GetData(audioSamples, Microphone.GetPosition(microphoneDevice) - sampleSize);
+            float volume = GetVolume(audioSamples);
+
+            // Aplica el impulso si el volumen supera el umbral
+            if (volume > microphoneThreshold)
+            {
+                ApplyImpulse(); // Aplica el impulso basado en el soplido
+            }
+        }
     }
+
 
     private void FixedUpdate()
     {
@@ -168,7 +201,7 @@ public class BubbleControl : MonoBehaviour
 
             if (superBubble == false)
             {
-                
+
                 audioSourceMusic.Stop();
 
                 isDead = true;
@@ -248,4 +281,22 @@ public class BubbleControl : MonoBehaviour
         powerUpActive = false; // Marca que el Power-Up ya no está activo
         Debug.Log($"Power-Up terminado. Velocidad reducida a {TimerController.time}");
     }
+
+    private float GetVolume(float[] samples)
+    {
+        float sum = 0f;
+        foreach (var sample in samples)
+        {
+            sum += sample * sample; // Cuadrado de cada muestra
+        }
+        return Mathf.Sqrt(sum / samples.Length); // RMS (Root Mean Square)
+    }
+
+    private void ApplyImpulse()
+    {
+        rb.linearVelocity = Vector2.zero; // Detén cualquier movimiento previo
+        rb.AddForce(Vector2.up * upwardForce, ForceMode2D.Impulse); // Aplica el impulso hacia arriba
+        Debug.Log("¡Soplido detectado! Impulso aplicado.");
+    }
+
 }
